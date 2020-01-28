@@ -1,0 +1,129 @@
+version: "3.5"
+
+networks:
+  frontend:
+    name: frontend
+    ipam:
+      config:
+        - subnet: 172.28.240.0/24
+  backend:
+    name: backend
+    ipam:
+      config:
+        - subnet: 172.28.241.0/24
+
+services:
+  traefik:
+    image: traefik:v2.1
+    container_name: traefik
+    command:
+      - --certificatesresolvers.default.acme.email=${CLOUDFLARE_API_EMAIL}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8443:8443"
+    environment:
+      - CF_API_EMAIL=${CLOUDFLARE_API_EMAIL}
+      - CF_API_KEY=${CLOUDFLARE_API_KEY}
+    networks:
+      frontend:
+    volumes:
+      - ./traefik:/etc/traefik
+      - ./acme:/acme
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped    
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      traefik.http.routers.api-insecure.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      traefik.http.routers.api-insecure.entrypoints: http
+      traefik.http.routers.api-insecure.middlewares: httpsRedirect@file
+      traefik.http.routers.api.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      traefik.http.routers.api.entrypoints: https
+      traefik.http.routers.api.tls.certresolver: default
+      #traefik.http.routers.api.middlewares: adminAuth@file
+      traefik.http.routers.api.service: api@internal
+
+  deconz:
+    image: marthoc/deconz
+    container_name: deconz
+    hostname: deconz
+    networks:
+      frontend:
+      backend:
+        ipv4_address: 172.28.241.10
+    volumes:
+      - ./deconz:/root/.local/share/dresden-elektronik/deCONZ
+    devices:
+      - /dev/ttyACM0
+    environment:
+      - TZ=Europe/London
+      - DECONZ_DEVICE=/dev/ttyACM0
+      - DECONZ_WEB_PORT=80
+      - DECONZ_WS_PORT=8443
+      - DECONZ_UPNP=0
+      - DECONZ_VNC_MODE=1
+      - DEBUG_INFO=1
+      - DEBUG_APS=0
+      - DEBUG_ZCL=0
+      - DEBUG_ZDP=0
+      - DEBUG_OTAU=0
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+
+      traefik.http.routers.deconz-insecure.rule: Host(`${DECONZ_FQDN}`)
+      traefik.http.routers.deconz-insecure.entrypoints: http
+      traefik.http.routers.deconz-insecure.middlewares: httpsRedirect@file
+      traefik.http.routers.deconz-insecure.service: deconz
+
+      traefik.http.routers.deconz.rule: Host(`${DECONZ_FQDN}`)
+      traefik.http.routers.deconz.entrypoints: https
+      traefik.http.routers.deconz.tls.certresolver: default
+      traefik.http.routers.deconz.service: deconz
+
+      traefik.http.services.deconz.loadbalancer.server.scheme: http
+      traefik.http.services.deconz.loadbalancer.server.port: 80
+
+      traefik.http.routers.deconz-wss.rule: Host(`${DECONZ_FQDN}`)
+      traefik.http.routers.deconz-wss.entrypoints: wss
+      traefik.http.routers.deconz-wss.tls.certresolver: default
+      traefik.http.routers.deconz-wss.service: deconz-wss
+
+      traefik.http.services.deconz-wss.loadbalancer.server.scheme: http
+      traefik.http.services.deconz-wss.loadbalancer.server.port: 8443
+
+  hass:
+    container_name: hass
+    image: homeassistant/raspberrypi4-homeassistant:stable
+    volumes:
+      - ./home-assistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PUID=${PUID}
+      - GUID=${GUID}
+    networks:
+      frontend:
+      backend:
+    healthcheck:
+      test: "curl -Lf http://localhost:8123"
+      start_period: 6m
+      timeout: 15s
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      traefik.http.routers.hass-insecure.rule: Host(`${HASS_FQDN}`)
+      traefik.http.routers.hass-insecure.entrypoints: http
+      traefik.http.routers.hass-insecure.middlewares: httpsRedirect@file
+      traefik.http.routers.hass-insecure.service: hass
+      traefik.http.routers.hass.rule: Host(`${HASS_FQDN}`)
+      traefik.http.routers.hass.entrypoints: https
+      traefik.http.routers.hass.tls.certresolver: default
+      traefik.http.routers.hass.service: hass
+      traefik.http.services.hass.loadbalancer.server.scheme: http
+      traefik.http.services.hass.loadbalancer.server.port: 8123

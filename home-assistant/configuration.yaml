@@ -1,0 +1,59 @@
+homeassistant:
+  name: Home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: !secret home_elevation
+  unit_system: metric
+  time_zone: Europe/London
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+  whitelist_external_dirs:
+    - /tmp
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 172.28.240.0/24
+        - 172.28.241.0/24
+
+http:
+  base_url: !secret base_url
+  server_port: 8123
+  login_attempts_threshold: 20
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+
+tts:
+  - platform: google_translate
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# History
+recorder:
+  purge_interval: 1
+  purge_keep_days: 2
+  #db_url: !secret recorder_db_url
+history:
+logbook:
+
+map:
+updater:
+system_health:
+sun:
+
+sensor: !include sensor.yaml
+
+binary_sensor:
+  - platform: workday
+    country: England
+    name: Workday
+
+#group: !include groups.yaml
+#automation: !include automations.yaml
+#script: !include scripts.yaml
+#scene: !include scenes.yaml
