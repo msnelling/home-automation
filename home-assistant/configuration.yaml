@@ -1,10 +1,13 @@
 homeassistant:
   name: Home
+  unit_system: metric
+  time_zone: Europe/London
+
+  # Location used by weather etc
   latitude: !secret home_latitude
   longitude: !secret home_longitude
   elevation: !secret home_elevation
-  unit_system: metric
-  time_zone: Europe/London
+
   customize: !include customize.yaml
   packages: !include_dir_named packages
   whitelist_external_dirs:
@@ -24,6 +27,7 @@ http:
   trusted_proxies:
     - 127.0.0.1
 
+# Text-to-Speech
 tts:
   - platform: google_translate
 
@@ -42,18 +46,25 @@ history:
 logbook:
 
 map:
+
 updater:
+
 system_health:
+
 sun:
 
-sensor: !include sensor.yaml
+weather:
+#  - platform: metoffice
+#    api_key: !secret metoffice_api_key
+#    name: Met Office
 
 binary_sensor:
   - platform: workday
     country: England
     name: Workday
 
-#group: !include groups.yaml
-#automation: !include automations.yaml
-#script: !include scripts.yaml
-#scene: !include scenes.yaml
+sensor: !include sensor.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
