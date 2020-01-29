@@ -124,6 +124,20 @@ services:
       traefik.http.routers.hass.rule: Host(`${HASS_FQDN}`)
       traefik.http.routers.hass.entrypoints: https
       traefik.http.routers.hass.tls.certresolver: default
+      traefik.http.routers.hass.tls.options: default@file
       traefik.http.routers.hass.service: hass
       traefik.http.services.hass.loadbalancer.server.scheme: http
       traefik.http.services.hass.loadbalancer.server.port: 8123
+
+  argo:
+    container_name: argo
+    image: msnelling/cloudflared:latest
+    environment:
+      - "TUNNEL_HOSTNAME=${HASS_FQDN}"
+      - "TUNNEL_URL=http://${HASS_FQDN}:8123"
+      - "TUNNEL_METRICS=127.0.0.1:"
+    volumes:
+      - ./cloudflared/cert.pem:/etc/cloudflared/cert.pem:ro
+    depends_on:
+      - hass
+    restart: unless-stopped
