@@ -14,10 +14,6 @@ homeassistant:
     - /tmp
   auth_providers:
     - type: homeassistant
-    - type: trusted_networks
-      trusted_networks:
-        - 172.28.240.0/24
-        - 172.28.241.0/24
 
 http:
   base_url: !secret base_url
@@ -36,6 +32,9 @@ frontend:
 
 # Enables configuration UI
 config:
+
+# Mobile app integration
+mobile_app:
 
 # History
 recorder:
@@ -57,6 +56,18 @@ weather:
 #  - platform: metoffice
 #    api_key: !secret metoffice_api_key
 #    name: Met Office
+
+zone:
+  - name: Home
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
+    radius: 50
+    icon: mdi:home
+  - name: Work
+    latitude: !secret work_latitude
+    longitude: !secret work_longitude
+    radius: 50
+    icon: mdi:office-building
 
 binary_sensor:
   - platform: workday
