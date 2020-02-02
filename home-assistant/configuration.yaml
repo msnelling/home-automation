@@ -36,6 +36,12 @@ config:
 # Mobile app integration
 mobile_app:
 
+# Access devices through HomeKit
+homekit:
+  safe_mode: true
+  advertise_ip: !secret homekit_broadcast_ip
+  port: 51828
+
 # History
 recorder:
   purge_interval: 1

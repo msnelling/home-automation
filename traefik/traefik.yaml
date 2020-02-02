@@ -4,17 +4,19 @@ log:
 api:
   dashboard: true
 
+#accessLog: {}
+
 entryPoints:
   http:
     address: ":80"
   https:
     address: ":443"
-  wss:
-    address: ":8443"
-
+  websocket:
+    address: ":8081"
+  
 providers:
   file:
-    directory: /etc/traefik/traefik.d
+    directory: /etc/traefik/traefik.d/
     watch: true
   docker:
     watch: true
