@@ -2,6 +2,7 @@
 .uuid
 tts/
 .HA_VERSION
+.homekit.state
 secrets.yaml
 home-assistant.log
 home-assistant_v2.db
