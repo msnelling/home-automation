@@ -36,6 +36,12 @@ config:
 # Mobile app integration
 mobile_app:
 
+# Philips Hue
+hue:
+  bridges:
+      - host: !secret hue_bridge_ip
+        allow_hue_groups: false
+
 # Access devices through HomeKit
 homekit:
   safe_mode: true
