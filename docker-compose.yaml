@@ -162,3 +162,38 @@ services:
     depends_on:
       - hass
     restart: unless-stopped
+
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    hostname: hass
+    ports:
+      - 1883:1883
+    networks:
+      frontend:
+      backend:
+        ipv4_address: 172.28.241.11
+    environment:
+      - PUID=1000
+      - PGID=999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mqtt/config:/mosquitto/config:ro
+      - ./mqtt/data:/mosquitto/data
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      # MQTT
+      traefik.tcp.routers.mqtt.rule: HostSNI(`${MQTT_FQDN}`)
+      traefik.tcp.routers.mqtt.entrypoints: mqtt
+      traefik.tcp.routers.mqtt.tls.certresolver: default
+      traefik.tcp.routers.mqtt.tls.options: default
+      traefik.tcp.services.mqtt.loadbalancer.server.port: 1883
+      # WebSocket
+      traefik.http.routers.mqtt.rule: Host(`${MQTT_FQDN}`)
+      traefik.http.routers.mqtt.entrypoints: https
+      traefik.http.routers.mqtt.tls.certresolver: default
+      traefik.http.routers.mqtt.tls.options: default
+      traefik.http.services.mqtt.loadbalancer.server.scheme: http
+      traefik.http.services.mqtt.loadbalancer.server.port: 8003

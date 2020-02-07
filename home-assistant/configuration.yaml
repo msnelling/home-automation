@@ -36,6 +36,10 @@ config:
 # Mobile app integration
 mobile_app:
 
+# MQTT
+mqtt:
+  broker: mqtt
+
 # Philips Hue
 hue:
   bridges:

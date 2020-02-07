@@ -13,6 +13,8 @@ entryPoints:
     address: ":443"
   websocket:
     address: ":8081"
+  mqtt:
+    address: ":8883"
   
 providers:
   file:
