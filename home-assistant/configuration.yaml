@@ -38,7 +38,11 @@ mobile_app:
 
 # MQTT
 mqtt:
+  client_id: home-assistant-1
   broker: mqtt
+  port: 1883
+  #username: !secret mqtt_user
+  #password: !secret mqtt_password
 
 # Philips Hue
 hue:
