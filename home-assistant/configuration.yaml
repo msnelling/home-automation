@@ -42,6 +42,15 @@ hue:
       - host: !secret hue_bridge_ip
         allow_hue_groups: false
 
+unifi:
+  controllers:
+    - host: !secret unifi_controller_ip
+      site: !secret unifi_controller_site
+      ssid_filter: 
+        - !secret unifi_controller_ssid
+      dont_track_devices: true
+      dont_track_wired_clients: true
+
 # Access devices through HomeKit
 homekit:
   safe_mode: true
