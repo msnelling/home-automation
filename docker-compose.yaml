@@ -232,3 +232,32 @@ services:
       traefik.http.routers.grafana.tls.options: default
       traefik.http.services.grafana.loadbalancer.server.scheme: http
       traefik.http.services.grafana.loadbalancer.server.port: 3000
+
+  nodered:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/London
+    ports:
+      - "1880:1880"
+    networks:
+      frontend:
+      backend:
+    volumes:
+      #- /etc/localtime:/etc/localtime:ro
+      - ./node-red:/data
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      # HTTP->HTTPS redirect
+      traefik.http.routers.nodered-insecure.rule: Host(`${NODERED_FQDN}`)
+      traefik.http.routers.nodered-insecure.entrypoints: http
+      traefik.http.routers.nodered-insecure.middlewares: httpsRedirect@file
+      # Web UI
+      traefik.http.routers.nodered.rule: Host(`${NODERED_FQDN}`)
+      traefik.http.routers.nodered.entrypoints: https
+      traefik.http.routers.nodered.tls.certresolver: default
+      traefik.http.routers.nodered.tls.options: default
+      traefik.http.services.nodered.loadbalancer.server.scheme: http
+      traefik.http.services.nodered.loadbalancer.server.port: 1880
+  
