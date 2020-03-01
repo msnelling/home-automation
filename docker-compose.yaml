@@ -186,11 +186,11 @@ services:
       traefik.enable: "true"
       traefik.docker.network: frontend
       # MQTT
-      traefik.tcp.routers.mqtt.rule: HostSNI(`${MQTT_FQDN}`)
-      traefik.tcp.routers.mqtt.entrypoints: mqtt
-      traefik.tcp.routers.mqtt.tls.certresolver: default
-      traefik.tcp.routers.mqtt.tls.options: default
-      traefik.tcp.services.mqtt.loadbalancer.server.port: 1883
+      #traefik.tcp.routers.mqtt.rule: HostSNI(`${MQTT_FQDN}`)
+      #traefik.tcp.routers.mqtt.entrypoints: mqtt
+      #traefik.tcp.routers.mqtt.tls.certresolver: default
+      #traefik.tcp.routers.mqtt.tls.options: default
+      #traefik.tcp.services.mqtt.loadbalancer.server.port: 1883
       # WebSocket
       traefik.http.routers.mqtt.rule: Host(`${MQTT_FQDN}`)
       traefik.http.routers.mqtt.entrypoints: https
