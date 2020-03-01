@@ -34,8 +34,8 @@ services:
       frontend:
       backend:
     environment:
-      - PUID=1000
-      - GUID=999
+      - PUID=${PUID}
+      - GUID=${GUID}
       - CF_API_EMAIL=${CLOUDFLARE_API_EMAIL}
       - CF_API_KEY=${CLOUDFLARE_API_KEY}
     volumes:
@@ -175,8 +175,8 @@ services:
       frontend:
       backend:
     environment:
-      - PUID=1000
-      - PGID=999
+      - PUID=${PUID}
+      - PGID=${GUID}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./mqtt/config:/mosquitto/config:ro
@@ -234,6 +234,7 @@ services:
       traefik.http.services.grafana.loadbalancer.server.port: 3000
 
   nodered:
+    container_name: node-red
     image: nodered/node-red:latest
     environment:
       - TZ=Europe/London
