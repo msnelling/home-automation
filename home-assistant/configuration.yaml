@@ -73,6 +73,12 @@ recorder:
 history:
 logbook:
 
+influxdb:
+  host: influxdb
+  include:
+    entities:
+      - binary_sensor.workday
+
 map:
 
 updater:

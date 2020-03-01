@@ -198,3 +198,37 @@ services:
       traefik.http.routers.mqtt.tls.options: default
       traefik.http.services.mqtt.loadbalancer.server.scheme: http
       traefik.http.services.mqtt.loadbalancer.server.port: 8003
+
+  influxdb:
+    container_name: influxdb
+    image: influxdb:latest
+    hostname: influxdb
+    networks:
+      backend:
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    restart: unless-stopped
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    networks:
+      frontend:
+      backend:
+    volumes:
+      - ./grafana:/var/lib/grafana
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      # HTTP->HTTPS redirect
+      traefik.http.routers.grafana-insecure.rule: Host(`${GRAFANA_FQDN}`)
+      traefik.http.routers.grafana-insecure.entrypoints: http
+      traefik.http.routers.grafana-insecure.middlewares: httpsRedirect@file
+      # Web UI
+      traefik.http.routers.grafana.rule: Host(`${GRAFANA_FQDN}`)
+      traefik.http.routers.grafana.entrypoints: https
+      traefik.http.routers.grafana.tls.certresolver: default
+      traefik.http.routers.grafana.tls.options: default
+      traefik.http.services.grafana.loadbalancer.server.scheme: http
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
