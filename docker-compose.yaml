@@ -51,6 +51,7 @@ services:
       traefik.http.routers.api-insecure.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       traefik.http.routers.api-insecure.entrypoints: http
       traefik.http.routers.api-insecure.middlewares: httpsRedirect@file
+      traefik.http.routers.api-insecure.service: api@internal
       traefik.http.routers.api.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       traefik.http.routers.api.entrypoints: https
       traefik.http.routers.api.tls.certresolver: default
@@ -167,7 +168,7 @@ services:
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto:latest
-    hostname: hass
+    hostname: mqtt
     ports:
       - 1883:1883
     networks:
