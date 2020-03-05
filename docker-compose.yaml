@@ -216,7 +216,9 @@ services:
       frontend:
       backend:
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./grafana:/var/lib/grafana
+    user: "472"
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -238,13 +240,11 @@ services:
     image: nodered/node-red:latest
     environment:
       - TZ=Europe/London
-    ports:
-      - "1880:1880"
     networks:
       frontend:
       backend:
     volumes:
-      #- /etc/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:ro
       - ./node-red:/data
     restart: unless-stopped
     labels:

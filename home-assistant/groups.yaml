@@ -1,0 +1,7 @@
+family:
+  name: Family
+  icon: mdi:account-group
+  #control: hidden
+  entities:
+    - person.mark
+    - person.eleonora
