@@ -58,6 +58,32 @@ services:
       traefik.http.routers.api.tls.options: default
       traefik.http.routers.api.service: api@internal
 
+  portainer:
+    container_name: portainer
+    image: portainer/portainer:latest
+    hostname: portainer
+    networks:
+      frontend:
+    volumes:
+      - ./portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      # HTTP->HTTPS redirect
+      traefik.http.routers.portainer-insecure.rule: PathPrefix(`/portainer`)
+      traefik.http.routers.portainer-insecure.entrypoints: http
+      traefik.http.routers.portainer-insecure.middlewares: httpsRedirect@file
+      traefik.http.routers.portainer-insecure.service: portainer
+      # Web UI
+      traefik.http.routers.portainer.rule: PathPrefix(`/portainer`)
+      traefik.http.routers.portainer.entrypoints: https
+      traefik.http.routers.portainer.tls.certresolver: default
+      traefik.http.routers.portainer.tls.options: default
+      traefik.http.routers.portainer.middlewares: trailingSlashFix@file
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+
   deconz:
     container_name: deconz
     image: marthoc/deconz
