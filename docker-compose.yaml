@@ -268,23 +268,22 @@ services:
     image: nodered/node-red:latest
     environment:
       - TZ=Europe/London
+      - ADMIN_AUTH=${NODERED_ADMIN_AUTH}
     networks:
       frontend:
       backend:
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./node-red:/data
+      - ./node-red:/data:rw
     restart: unless-stopped
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
       # HTTP->HTTPS redirect
-      #traefik.http.routers.nodered-insecure.rule: Host(`${NODERED_FQDN}`)
       traefik.http.routers.nodered-insecure.rule: PathPrefix(`/nodered`)
       traefik.http.routers.nodered-insecure.entrypoints: http
       traefik.http.routers.nodered-insecure.middlewares: httpsRedirect@file
       # Web UI
-      #traefik.http.routers.nodered.rule: Host(`${NODERED_FQDN}`)
       traefik.http.routers.nodered.rule: PathPrefix(`/nodered`)
       traefik.http.routers.nodered.entrypoints: https
       traefik.http.routers.nodered.tls.certresolver: default

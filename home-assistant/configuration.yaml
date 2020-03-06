@@ -77,6 +77,7 @@ influxdb:
   host: influxdb
   include:
     entities:
+      - weather.home
       - sensor.daylight
       - sensor.bedroom_multi_sensor_temperature
       - sensor.bedroom_multi_sensor_humidity
