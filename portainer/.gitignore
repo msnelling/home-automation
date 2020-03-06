@@ -1,0 +1,5 @@
+bin/
+compose/
+tls/
+config.json
+portainer.*
