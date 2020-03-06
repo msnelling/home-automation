@@ -47,11 +47,12 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # Dashboard and API
+      # HTTP->HTTPS redirect
       traefik.http.routers.api-insecure.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       traefik.http.routers.api-insecure.entrypoints: http
       traefik.http.routers.api-insecure.middlewares: httpsRedirect@file
       traefik.http.routers.api-insecure.service: api@internal
+      # Dashboard and API
       traefik.http.routers.api.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       traefik.http.routers.api.entrypoints: https
       traefik.http.routers.api.tls.certresolver: default
@@ -243,18 +244,19 @@ services:
       backend:
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./grafana:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/data:/var/lib/grafana
     user: "472"
     restart: unless-stopped
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
       # HTTP->HTTPS redirect
-      traefik.http.routers.grafana-insecure.rule: Host(`${GRAFANA_FQDN}`)
+      traefik.http.routers.grafana-insecure.rule: PathPrefix(`/grafana`)
       traefik.http.routers.grafana-insecure.entrypoints: http
       traefik.http.routers.grafana-insecure.middlewares: httpsRedirect@file
       # Web UI
-      traefik.http.routers.grafana.rule: Host(`${GRAFANA_FQDN}`)
+      traefik.http.routers.grafana.rule: PathPrefix(`/grafana`)
       traefik.http.routers.grafana.entrypoints: https
       traefik.http.routers.grafana.tls.certresolver: default
       traefik.http.routers.grafana.tls.options: default
@@ -277,14 +279,15 @@ services:
       traefik.enable: "true"
       traefik.docker.network: frontend
       # HTTP->HTTPS redirect
-      traefik.http.routers.nodered-insecure.rule: Host(`${NODERED_FQDN}`)
+      #traefik.http.routers.nodered-insecure.rule: Host(`${NODERED_FQDN}`)
+      traefik.http.routers.nodered-insecure.rule: PathPrefix(`/nodered`)
       traefik.http.routers.nodered-insecure.entrypoints: http
       traefik.http.routers.nodered-insecure.middlewares: httpsRedirect@file
       # Web UI
-      traefik.http.routers.nodered.rule: Host(`${NODERED_FQDN}`)
+      #traefik.http.routers.nodered.rule: Host(`${NODERED_FQDN}`)
+      traefik.http.routers.nodered.rule: PathPrefix(`/nodered`)
       traefik.http.routers.nodered.entrypoints: https
       traefik.http.routers.nodered.tls.certresolver: default
       traefik.http.routers.nodered.tls.options: default
       traefik.http.services.nodered.loadbalancer.server.scheme: http
       traefik.http.services.nodered.loadbalancer.server.port: 1880
-  

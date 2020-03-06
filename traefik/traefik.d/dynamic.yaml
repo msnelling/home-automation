@@ -3,7 +3,20 @@ http:
     httpsRedirect:
       redirectScheme:
         scheme: https
-tls:
+    trailingSlashFix1:
+      redirectRegex:
+        regex: ^(https?://[^/]+/[a-z0-9_]+)$$
+        replacement: $${1}/
+    trailingSlashFix2:
+      stripPrefixRegex:
+        regex: 
+          - /[a-z0-9_]+
+    trailingSlashFix:
+      chain:
+        middlewares:
+          - trailingSlashFix1
+          - trailingSlashFix2
+    tls:
   options:
     default:
       #sniStrict: true
