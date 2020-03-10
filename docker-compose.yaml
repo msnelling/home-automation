@@ -184,7 +184,7 @@ services:
       frontend:
     environment:
       - "TUNNEL_HOSTNAME=${HASS_FQDN}"
-      - "TUNNEL_URL=http://hass:8123"
+      - "TUNNEL_URL=https://${HASS_FQDN}"
       - "TUNNEL_METRICS=127.0.0.1:"
     volumes:
       - ./cloudflared/cert.pem:/etc/cloudflared/cert.pem:ro

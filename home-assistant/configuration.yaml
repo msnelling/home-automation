@@ -26,12 +26,27 @@ http:
 # Text-to-Speech
 tts:
   - platform: google_translate
+    service_name: google_say
+    language: 'en-uk'
 
 # Enables the frontend
 frontend:
 
+# UI panels
+panel_iframe:
+  nodered:
+    title: Node-RED
+    icon: mdi:shuffle-variant
+    url: https://home.xmple.io/nodered/
+
 # Enables configuration UI
 config:
+
+discovery:
+
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
 
 # Mobile app integration
 mobile_app:
@@ -54,14 +69,26 @@ unifi:
   controllers:
     - host: !secret unifi_controller_ip
       site: !secret unifi_controller_site
-      ssid_filter: 
-        - !secret unifi_controller_ssid
+      dont_track_clients: false
       dont_track_devices: true
       dont_track_wired_clients: true
+      ssid_filter: 
+        - !secret unifi_controller_ssid
+
+person:
+  - name: Mark
+    id: mark
+    user_id: !secret ha_user_id_mark
+    device_trackers:
+      - device_tracker.app_iphone_mark
+      - device_tracker.unifi_iphone_mark
+  - name: Eleonora
+    id: eleonora
+    device_trackers:
+      - device_tracker.unifi_iphone_eleonora
 
 # Access devices through HomeKit
 homekit:
-  safe_mode: true
   advertise_ip: !secret homekit_broadcast_ip
   port: 51828
 
@@ -77,7 +104,7 @@ influxdb:
   host: influxdb
   include:
     entities:
-      - weather.home
+      - weather.dark_sky
       - sensor.daylight
       - sensor.bedroom_multi_sensor_temperature
       - sensor.bedroom_multi_sensor_humidity
@@ -109,9 +136,10 @@ system_health:
 sun:
 
 weather:
-#  - platform: metoffice
-#    api_key: !secret metoffice_api_key
-#    name: Met Office
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
 
 zone:
   - name: Home
