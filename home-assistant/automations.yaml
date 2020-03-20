@@ -20,7 +20,7 @@
   action:
   - data:
       message: The balcony door was opened.
-    service: notify.mobile_app_iphone
+    service: notify.mobile_app_marks_iphone
 - id: Balcony door closed
   alias: Balcony door closed
   trigger:
@@ -31,7 +31,7 @@
   action:
   - data:
       message: The balcony door was closed.
-    service: notify.mobile_app_iphone
+    service: notify.mobile_app_marks_iphone
 - id: Front door opened
   alias: Front door opened
   trigger:
@@ -46,7 +46,7 @@
   action:
   - data:
       message: The front door was opened.
-    service: notify.mobile_app_iphone
+    service: notify.mobile_app_marks_iphone
 - id: Front door closed
   alias: Front door closed
   trigger:
@@ -61,4 +61,4 @@
   action:
   - data:
       message: The front door was closed.
-    service: notify.mobile_app_iphone
+    service: notify.mobile_app_marks_iphone
