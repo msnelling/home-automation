@@ -8,40 +8,41 @@
   action:
   - service: notify.notify
     data_template:
-      message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
+      message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version')
+        }} is available.
 - id: Balcony door opened
   alias: Balcony door opened
   trigger:
-  - entity_id: binary_sensor.balcony_door_sensor
-    platform: state
+  - entity_id: binary_sensor.balcony_door_contact
     from: 'off'
+    platform: state
     to: 'on'
   action:
-  - service: notify.mobile_app_iphone
-    data:
+  - data:
       message: The balcony door was opened.
+    service: notify.mobile_app_iphone
 - id: Balcony door closed
   alias: Balcony door closed
   trigger:
-  - entity_id: binary_sensor.balcony_door_sensor
-    platform: state
+  - entity_id: binary_sensor.balcony_door_contact
     from: 'on'
+    platform: state
     to: 'off'
   action:
-  - service: notify.mobile_app_iphone
-    data:
+  - data:
       message: The balcony door was closed.
+    service: notify.mobile_app_iphone
 - id: Front door opened
   alias: Front door opened
   trigger:
-  - entity_id: binary_sensor.front_door_sensor
+  - entity_id: binary_sensor.front_door_contact
     from: 'off'
     platform: state
     to: 'on'
   condition:
   - condition: state
     entity_id: person.mark
-    state: away
+    state: not_home
   action:
   - data:
       message: The front door was opened.
@@ -49,14 +50,14 @@
 - id: Front door closed
   alias: Front door closed
   trigger:
-  - entity_id: binary_sensor.front_door_sensor
+  - entity_id: binary_sensor.front_door_contact
     from: 'on'
     platform: state
     to: 'off'
   condition:
   - condition: state
     entity_id: person.mark
-    state: away
+    state: not_home
   action:
   - data:
       message: The front door was closed.

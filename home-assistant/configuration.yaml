@@ -53,11 +53,18 @@ mobile_app:
 
 # MQTT
 mqtt:
+  discovery: true
   client_id: home-assistant-1
   broker: mqtt
   port: 1883
   #username: !secret mqtt_user
   #password: !secret mqtt_password
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
 
 # Philips Hue
 hue:
@@ -106,26 +113,26 @@ influxdb:
     entities:
       - weather.dark_sky
       - sensor.daylight
-      - sensor.bedroom_multi_sensor_temperature
-      - sensor.bedroom_multi_sensor_humidity
-      - sensor.bedroom_multi_sensor_pressure
-      - sensor.bedroom_multi_sensor_battery_level
-      - sensor.kitchen_multi_sensor_temperature
-      - sensor.kitchen_multi_sensor_pressure
-      - sensor.kitchen_multi_sensor_humidity
-      - sensor.kitchen_multi_sensor_battery_level
-      - sensor.living_room_multi_sensor_temperature
-      - sensor.living_room_multi_sensor_pressure
-      - sensor.living_room_multi_sensor_humidity
-      - sensor.living_room_multi_sensor_battery_level
-      - sensor.lunas_room_multi_sensor_temperature
-      - sensor.lunas_room_multi_sensor_pressure
-      - sensor.lunas_room_multi_sensor_humidity
-      - sensor.lunas_room_multi_sensor_battery_level
-      - sensor.front_door_sensor_battery_level
-      - sensor.balcony_door_sensor_battery_level
-      - binary_sensor.front_door_sensor
-      - binary_sensor.balcony_door_sensor
+      - sensor.climate_bedroom_temperature
+      - sensor.climate_bedroom_humidity
+      - sensor.climate_bedroom_pressure
+      - sensor.climate_bedroom_battery
+      - sensor.climate_kitchen_temperature
+      - sensor.climate_kitchen_pressure
+      - sensor.climate_kitchen_humidity
+      - sensor.climate_kitchen_battery
+      - sensor.climate_livingroom_temperature
+      - sensor.climate_livingroom_pressure
+      - sensor.climate_livingroom_humidity
+      - sensor.climate_livingroom_battery
+      - sensor.climate_lunas_room_temperature
+      - sensor.climate_lunas_room_pressure
+      - sensor.climate_lunas_room_humidity
+      - sensor.climate_lunas_room_battery
+      - sensor.front_door_battery
+      - sensor.balcony_door_battery
+      - binary_sensor.front_door_contact
+      - binary_sensor.balcony_door_contact
 
 map:
 
