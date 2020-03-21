@@ -1,5 +1,8 @@
 version: "3.5"
 
+volumes:
+  chronograf_data:
+
 networks:
   frontend:
     name: frontend
@@ -252,6 +255,34 @@ services:
     volumes:
       - ./influxdb:/var/lib/influxdb
     restart: unless-stopped
+
+  chronograf:
+    container_name: chronograf
+    image: chronograf:latest
+    command:
+      - chronograf
+      - --basepath=/chronograf
+      - --influxdb-url=http://influxdb:8086
+    networks:
+      frontend:
+      backend:
+    volumes:
+      - chronograf_data:/var/lib/chronograf
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: frontend
+      # HTTP->HTTPS redirect
+      traefik.http.routers.chronograf-insecure.rule: PathPrefix(`/chronograf`)
+      traefik.http.routers.chronograf-insecure.entrypoints: http
+      traefik.http.routers.chronograf-insecure.middlewares: httpsRedirect@file
+      # Web UI
+      traefik.http.routers.chronograf.rule: PathPrefix(`/chronograf`)
+      traefik.http.routers.chronograf.entrypoints: https
+      traefik.http.routers.chronograf.tls.certresolver: default
+      traefik.http.routers.chronograf.tls.options: default
+      traefik.http.services.chronograf.loadbalancer.server.scheme: http
+      traefik.http.services.chronograf.loadbalancer.server.port: 8888
 
   grafana:
     container_name: grafana
