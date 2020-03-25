@@ -231,9 +231,9 @@ services:
       traefik.http.services.mqtt.loadbalancer.server.scheme: http
       traefik.http.services.mqtt.loadbalancer.server.port: 8003
 
-  zigbee2mqtt:
-    container_name: zigbee2mqtt
-    image: koenkk/zigbee2mqtt:latest
+  z2m:
+    container_name: z2m
+    image: koenkk/zigbee2mqtt:latest-dev
     networks:
       backend:
     devices:
@@ -244,6 +244,18 @@ services:
     environment:
       - TZ=Europe/London
     privileged: true
+    restart: unless-stopped
+
+  z2ma:
+    image: carldebilly/zigbee2mqttassistant:dev
+    container_name: z2ma
+    ports:
+      - 8880:80
+    networks:
+      backend:
+    environment:
+      - Z2MA_SETTINGS__MQTTSERVER=mqtt
+      - TZ=Europe/London
     restart: unless-stopped
 
   influxdb:
