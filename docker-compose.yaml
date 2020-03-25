@@ -89,60 +89,6 @@ services:
       traefik.http.routers.portainer.tls.options: default
       traefik.http.routers.portainer.middlewares: trailingSlashFix@file
       traefik.http.services.portainer.loadbalancer.server.port: 9000
-
-  deconz:
-    container_name: deconz
-    image: marthoc/deconz
-    hostname: deconz
-    ports:
-      - "5900:15900"
-    networks:
-      frontend:
-        ipv4_address: 172.28.240.10
-      backend:
-        ipv4_address: 172.28.241.10
-    volumes:
-      - ./deconz:/root/.local/share/dresden-elektronik/deCONZ
-#    devices:
-#      - /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2120741-if00:/dev/ttyACM0
-    environment:
-      - TZ=Europe/London
-      - DECONZ_DEVICE=/dev/ttyACM0
-      - DECONZ_WEB_PORT=8080
-      - DECONZ_WS_PORT=8081
-      - DECONZ_UPNP=0
-      - DECONZ_VNC_MODE=1
-      - DECONZ_VNC_PORT=15900
-      - DEBUG_INFO=1
-      - DEBUG_APS=0
-      - DEBUG_ZCL=0
-      - DEBUG_ZDP=0
-      - DEBUG_OTAU=0
-    restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.deconz-insecure.rule: Host(`${DECONZ_FQDN}`)
-      traefik.http.routers.deconz-insecure.entrypoints: http
-      traefik.http.routers.deconz-insecure.middlewares: httpsRedirect@file
-      traefik.http.routers.deconz-insecure.service: deconz
-      # Web UI
-      traefik.http.routers.deconz.rule: Host(`${DECONZ_FQDN}`)
-      traefik.http.routers.deconz.entrypoints: https
-      traefik.http.routers.deconz.tls.certresolver: default
-      traefik.http.routers.deconz.tls.options: default
-      traefik.http.routers.deconz.service: deconz
-      traefik.http.services.deconz.loadbalancer.server.scheme: http
-      traefik.http.services.deconz.loadbalancer.server.port: 8080
-      # Web UI WebSockets
-      traefik.http.routers.deconz-wss.rule: Host(`${DECONZ_FQDN}`)
-      traefik.http.routers.deconz-wss.entrypoints: websocket
-      traefik.http.routers.deconz-wss.tls.certresolver: default
-      traefik.http.routers.deconz-wss.tls.options: default
-      traefik.http.routers.deconz-wss.service: deconz-wss
-      traefik.http.services.deconz-wss.loadbalancer.server.scheme: http
-      traefik.http.services.deconz-wss.loadbalancer.server.port: 8081
       
   hass:
     container_name: hass
