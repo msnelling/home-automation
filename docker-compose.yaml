@@ -24,7 +24,7 @@ networks:
 services:
   traefik:
     container_name: traefik
-    image: traefik:v2.1
+    image: traefik:v2.2
     hostname: traefik
     command:
       - --certificatesresolvers.default.acme.email=${CLOUDFLARE_API_EMAIL}
