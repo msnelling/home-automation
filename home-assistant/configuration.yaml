@@ -79,6 +79,7 @@ unifi:
       dont_track_clients: false
       dont_track_devices: true
       dont_track_wired_clients: true
+      detection_time: 600
       ssid_filter: 
         - !secret unifi_controller_ssid
 
@@ -88,7 +89,6 @@ person:
     user_id: !secret ha_user_id_mark
     device_trackers:
       - device_tracker.app_iphone_mark
-      - device_tracker.unifi_iphone_mark
   - name: Eleonora
     id: eleonora
     device_trackers:
@@ -131,9 +131,12 @@ influxdb:
       - sensor.climate_lunas_room_battery
       - sensor.front_door_battery
       - sensor.balcony_door_battery
+      - sensor.bathroom_window_battery
+      - sensor.kitchen_window_battery
       - binary_sensor.front_door_contact
       - binary_sensor.balcony_door_contact
-
+      - binary_sensor.bathroom_window_contact
+      - binary_sensor.kitchen_window_contact
 map:
 
 updater:
