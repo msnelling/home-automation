@@ -37,7 +37,7 @@ panel_iframe:
   stats:
     title: Grafana
     icon: mdi:chart-areaspline
-    url: https://home.xmple.io/grafana/d/pRwgexmgz/environment?orgId=1&refresh=1s&theme=light&kiosk=1
+    url: https://home.xmple.io/grafana/d/pRwgexmgz/environment?orgId=1&refresh=1s&theme=light&kiosk=1&from=now-2d&to=now
   nodered:
     title: Node-RED
     icon: mdi:shuffle-variant
