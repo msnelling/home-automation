@@ -34,6 +34,10 @@ frontend:
 
 # UI panels
 panel_iframe:
+  stats:
+    title: Grafana
+    icon: mdi:chart-areaspline
+    url: https://home.xmple.io/grafana/d/pRwgexmgz/environment?orgId=1&refresh=1s&theme=light&kiosk=1
   nodered:
     title: Node-RED
     icon: mdi:shuffle-variant
@@ -88,11 +92,15 @@ person:
     id: mark
     user_id: !secret ha_user_id_mark
     device_trackers:
-      - device_tracker.app_iphone_mark
+      - device_tracker.app_marks_iphone
   - name: Eleonora
     id: eleonora
     device_trackers:
       - device_tracker.unifi_iphone_eleonora
+  - name: Kati
+    id: kati
+    device_trackers:
+      - device_tracker.unifi_galaxy6s_kati
 
 # Access devices through HomeKit
 homekit:
