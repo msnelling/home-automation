@@ -16,7 +16,7 @@ http:
         middlewares:
           - trailingSlashFix1
           - trailingSlashFix2
-    tls:
+tls:
   options:
     default:
       #sniStrict: true
