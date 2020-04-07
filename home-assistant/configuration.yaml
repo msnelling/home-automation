@@ -107,6 +107,14 @@ homekit:
   advertise_ip: !secret homekit_broadcast_ip
   port: 51828
 
+dyson:
+  username: !secret dyson_username
+  password: !secret dyson_password
+  language: GB
+  devices:
+    - device_id: !secret dyson_360eye_serial
+      device_ip: !secret dyson_360eye_ip
+
 # History
 recorder:
   purge_interval: 1
