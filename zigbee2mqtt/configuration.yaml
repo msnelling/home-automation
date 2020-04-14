@@ -2,7 +2,7 @@ homeassistant: true
 permit_join: true
 mqtt:
   base_topic: zigbee2mqtt
-  server: mqtt://mqtt
+  server: 'mqtt://mqtt'
 serial:
   adapter: deconz
   port: /dev/ttyACM0
@@ -25,6 +25,14 @@ map_options:
         active: '#009900'
         inactive: '#994444'
 devices:
+  '0x00158d0004444fd8':
+    friendly_name: climate_livingroom
+  '0x00158d000427239d':
+    friendly_name: climate_kitchen
+  '0x00158d00041869a7':
+    friendly_name: climate_lunas_room
+  '0x00158d0004216d13':
+    friendly_name: climate_bedroom
   '0x00158d0004201937':
     friendly_name: front_door
   '0x00158d00040be15e':
@@ -33,14 +41,6 @@ devices:
     friendly_name: kitchen_window
   '0x00158d00045c2898':
     friendly_name: bathroom_window
-  '0x00158d0004444fd8':
-    friendly_name: climate_livingroom
-  '0x00158d00041869a7':
-    friendly_name: climate_lunas_room
-  '0x00158d0004216d13':
-    friendly_name: climate_bedroom
-  '0x00158d000427239d':
-    friendly_name: climate_kitchen
   '0x000d6ffffe7c159d':
     friendly_name: repeater_hallway
   '0x000d6ffffea05da1':
