@@ -155,6 +155,10 @@ influxdb:
       - sensor.climate_lunas_room_pressure
       - sensor.climate_lunas_room_humidity
       - sensor.climate_lunas_room_battery
+      - sensor.climate_snug_temperature
+      - sensor.climate_snug_pressure
+      - sensor.climate_snug_humidity
+      - sensor.climate_snug_battery
       - sensor.front_door_battery
       - sensor.balcony_door_battery
       - sensor.bathroom_window_battery
@@ -163,6 +167,7 @@ influxdb:
       - binary_sensor.balcony_door_contact
       - binary_sensor.bathroom_window_contact
       - binary_sensor.kitchen_window_contact
+
 map:
 
 updater:

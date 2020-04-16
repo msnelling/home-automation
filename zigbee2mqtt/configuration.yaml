@@ -33,6 +33,8 @@ devices:
     friendly_name: climate_lunas_room
   '0x00158d0004216d13':
     friendly_name: climate_bedroom
+  '0x00158d00047bc420':
+    friendly_name: climate_snug
   '0x00158d0004201937':
     friendly_name: front_door
   '0x00158d00040be15e':
