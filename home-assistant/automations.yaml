@@ -39,10 +39,7 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition:
-  - condition: state
-    entity_id: person.mark
-    state: not_home
+  condition: []
   action:
   - data:
       message: The front door was opened.
@@ -54,10 +51,7 @@
     from: 'on'
     platform: state
     to: 'off'
-  condition:
-  - condition: state
-    entity_id: person.mark
-    state: not_home
+  condition: []
   action:
   - data:
       message: The front door was closed.
