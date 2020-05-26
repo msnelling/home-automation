@@ -244,7 +244,7 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana:6.7.2
+    image: grafana/grafana:latest
     networks:
       frontend:
       backend:
