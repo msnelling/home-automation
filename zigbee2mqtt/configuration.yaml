@@ -47,3 +47,5 @@ devices:
     friendly_name: repeater_hallway
   '0x000d6ffffea05da1':
     friendly_name: repeater_livingroom
+  '0x0017880100f6e56c':
+    friendly_name: 'snug_main'
