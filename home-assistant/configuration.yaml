@@ -57,7 +57,7 @@ mobile_app:
 
 # MQTT
 mqtt:
-  discovery: true
+  #discovery: true
   client_id: home-assistant-1
   broker: mqtt
   port: 1883
@@ -86,17 +86,6 @@ sonos:
       - 10.1.1.114 # Bedroon
       - 10.1.1.133 # Luna's Room
 
-unifi:
-  controllers:
-    - host: !secret unifi_controller_ip
-      site: !secret unifi_controller_site
-      dont_track_clients: false
-      dont_track_devices: true
-      dont_track_wired_clients: true
-      detection_time: 600
-      ssid_filter: 
-        - !secret unifi_controller_ssid
-
 person:
   - name: Mark
     id: mark
@@ -105,12 +94,12 @@ person:
       - device_tracker.app_marks_iphone
   - name: Eleonora
     id: eleonora
-    device_trackers:
-      - device_tracker.unifi_iphone_eleonora
+#    device_trackers:
+#      - device_tracker.unifi_iphone_eleonora
   - name: Kati
     id: kati
-    device_trackers:
-      - device_tracker.unifi_galaxy6s_kati
+#    device_trackers:
+#      - device_tracker.unifi_galaxy6s_kati
 
 # Access devices through HomeKit
 homekit:
@@ -200,6 +189,8 @@ binary_sensor:
     name: Workday
 
 sensor: !include sensor.yaml
+sensor mqtt: !include sensor_mqtt.yaml
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
