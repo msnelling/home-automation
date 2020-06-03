@@ -207,22 +207,74 @@
   unit_of_measurement: lqi
   value_template: "{{ value_json.linkquality }}"
 
+# Contact kitcheb window
 - platform: mqtt
-  name: front_door_contact
-  unique_id: front_door_contact
+  name: kitchen_window_battery
+  unique_id: kitchen_window_battery
+  state_topic: zigbee2mqtt/kitchen_window
+  availability_topic: zigbee2mqtt/bridge/state
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt
+  name: kitchen_window_linkquality
+  unique_id: kitchen_window_linkquality
+  state_topic: zigbee2mqtt/kitchen_window
+  availability_topic: zigbee2mqtt/bridge/state
+  icon: mdi:signal
+  unit_of_measurement: lqi
+  value_template: "{{ value_json.linkquality }}"
+
+# Contact bathroom window
+- platform: mqtt
+  name: bathroom_window_battery
+  unique_id: bathroom_window_battery
+  state_topic: zigbee2mqtt/bathroom_window
+  availability_topic: zigbee2mqtt/bridge/state
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt
+  name: bathroom_window_linkquality
+  unique_id: bathroom_window_linkquality
+  state_topic: zigbee2mqtt/bathroom_window
+  availability_topic: zigbee2mqtt/bridge/state
+  icon: mdi:signal
+  unit_of_measurement: lqi
+  value_template: "{{ value_json.linkquality }}"
+
+# Contact front door
+- platform: mqtt
+  name: front_door_battery
+  unique_id: front_door_battery
   state_topic: zigbee2mqtt/front_door
   availability_topic: zigbee2mqtt/bridge/state
-  #payload_on: false
-  #payload_off: ON
-  value_template: "{{ value_json.contact }}"
-  #device_class: door
-
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ value_json.battery }}"
 - platform: mqtt
-  name: balcony_door_contact
-  unique_id: balcony_door_contact
+  name: front_door_linkquality
+  unique_id: front_door_linkquality
+  state_topic: zigbee2mqtt/front_door
+  availability_topic: zigbee2mqtt/bridge/state
+  icon: mdi:signal
+  unit_of_measurement: lqi
+  value_template: "{{ value_json.linkquality }}"
+
+# Contact balcony door
+- platform: mqtt
+  name: balcony_door_battery
+  unique_id: balcony_door_battery
   state_topic: zigbee2mqtt/balcony_door
   availability_topic: zigbee2mqtt/bridge/state
-  #payload_on: false
-  #payload_off: true
-  value_template: "{{ value_json.contact }}"
-  #device_class: door
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt
+  name: balcony_door_linkquality
+  unique_id: balcony_door_linkquality
+  state_topic: zigbee2mqtt/balcony_door
+  availability_topic: zigbee2mqtt/bridge/state
+  icon: mdi:signal
+  unit_of_measurement: lqi
+  value_template: "{{ value_json.linkquality }}"

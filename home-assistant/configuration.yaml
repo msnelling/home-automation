@@ -114,6 +114,14 @@ dyson:
     - device_id: !secret dyson_360eye_serial
       device_ip: !secret dyson_360eye_ip
 
+samsungtv:
+  - name: Samsung UE65KS9500 TV
+    host: !secret samsung_tv_ip
+    turn_on_action:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: "40:16:3b:0e:3f:f5"
+
 # History
 recorder:
   purge_interval: 1
@@ -183,13 +191,11 @@ zone:
     radius: 50
     icon: mdi:office-building
 
-binary_sensor:
-  - platform: workday
-    country: England
-    name: Workday
+sensor: !include sensors.yaml
+sensor mqtt: !include mqtt/sensors.yaml
 
-sensor: !include sensor.yaml
-sensor mqtt: !include sensor_mqtt.yaml
+binary_sensor: !include binary_sensors.yaml
+binary_sensor mqtt: !include mqtt/binary_sensors.yaml
 
 group: !include groups.yaml
 automation: !include automations.yaml
