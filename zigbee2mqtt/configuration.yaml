@@ -8,7 +8,7 @@ serial:
   port: /dev/ttyACM0
 advanced:
   channel: 15
-  log_level: debug
+  #log_level: debug
   log_output:
     - console
 map_options:
@@ -50,5 +50,3 @@ devices:
     friendly_name: repeater_livingroom
   '0x0017880100f6e56c':
     friendly_name: snug_main
-  '0x000d6ffffe6c28f1':
-    friendly_name: 'livingroom_main'
