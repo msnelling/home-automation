@@ -6,20 +6,11 @@ volumes:
 networks:
   frontend:
     name: frontend
-    ipam:
-      config:
-        - subnet: 172.28.240.0/24
   backend:
     name: backend
-    ipam:
-      config:
-        - subnet: 172.28.241.0/24
   hass-bridge:
     name: hass-bridge
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.242.0/24
 
 services:
   traefik:
@@ -50,52 +41,19 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.api-insecure.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-      traefik.http.routers.api-insecure.entrypoints: http
-      traefik.http.routers.api-insecure.middlewares: httpsRedirect@file
-      traefik.http.routers.api-insecure.service: api@internal
       # Dashboard and API
       traefik.http.routers.api.rule: Host(`${HOSTNAME}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-      traefik.http.routers.api.entrypoints: https
+      traefik.http.routers.api.entrypoints: http,https
       traefik.http.routers.api.tls.certresolver: default
       traefik.http.routers.api.tls.options: default
       traefik.http.routers.api.service: api@internal
-
-  portainer:
-    container_name: portainer
-    image: portainer/portainer:latest
-    hostname: portainer
-    ports:
-      - "8000:8000/tcp"
-    networks:
-      frontend:
-    volumes:
-      - ./portainer:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.portainer-insecure.rule: PathPrefix(`/portainer`)
-      traefik.http.routers.portainer-insecure.entrypoints: http
-      traefik.http.routers.portainer-insecure.middlewares: httpsRedirect@file
-      traefik.http.routers.portainer-insecure.service: portainer
-      # Web UI
-      traefik.http.routers.portainer.rule: PathPrefix(`/portainer`)
-      traefik.http.routers.portainer.entrypoints: https
-      traefik.http.routers.portainer.tls.certresolver: default
-      traefik.http.routers.portainer.tls.options: default
-      traefik.http.routers.portainer.middlewares: trailingSlashFix@file
-      traefik.http.services.portainer.loadbalancer.server.port: 9000
       
   hass:
     container_name: hass
     image: homeassistant/raspberrypi4-homeassistant:stable
     hostname: hass
     ports:
-      - "51828:51828"
+      - 51827:51827/tcp
     networks:
       frontend:
       backend:
@@ -116,13 +74,9 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.hass-insecure.rule: Host(`${HASS_FQDN}`)
-      traefik.http.routers.hass-insecure.entrypoints: http
-      traefik.http.routers.hass-insecure.middlewares: httpsRedirect@file
       # Web UI
       traefik.http.routers.hass.rule: Host(`${HASS_FQDN}`)
-      traefik.http.routers.hass.entrypoints: https
+      traefik.http.routers.hass.entrypoints: http,https
       traefik.http.routers.hass.tls.certresolver: default
       traefik.http.routers.hass.tls.options: default
       traefik.http.services.hass.loadbalancer.server.scheme: http
@@ -171,7 +125,7 @@ services:
       #traefik.tcp.services.mqtt.loadbalancer.server.port: 1883
       # WebSocket
       traefik.http.routers.mqtt.rule: Host(`${MQTT_FQDN}`)
-      traefik.http.routers.mqtt.entrypoints: https
+      traefik.http.routers.mqtt.entrypoints: http,https
       traefik.http.routers.mqtt.tls.certresolver: default
       traefik.http.routers.mqtt.tls.options: default
       traefik.http.services.mqtt.loadbalancer.server.scheme: http
@@ -230,13 +184,9 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.chronograf-insecure.rule: PathPrefix(`/chronograf`)
-      traefik.http.routers.chronograf-insecure.entrypoints: http
-      traefik.http.routers.chronograf-insecure.middlewares: httpsRedirect@file
       # Web UI
       traefik.http.routers.chronograf.rule: PathPrefix(`/chronograf`)
-      traefik.http.routers.chronograf.entrypoints: https
+      traefik.http.routers.chronograf.entrypoints: http,https
       traefik.http.routers.chronograf.tls.certresolver: default
       traefik.http.routers.chronograf.tls.options: default
       traefik.http.services.chronograf.loadbalancer.server.scheme: http
@@ -257,13 +207,9 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.grafana-insecure.rule: PathPrefix(`/grafana`)
-      traefik.http.routers.grafana-insecure.entrypoints: http
-      traefik.http.routers.grafana-insecure.middlewares: httpsRedirect@file
       # Web UI
       traefik.http.routers.grafana.rule: PathPrefix(`/grafana`)
-      traefik.http.routers.grafana.entrypoints: https
+      traefik.http.routers.grafana.entrypoints: http,https
       traefik.http.routers.grafana.tls.certresolver: default
       traefik.http.routers.grafana.tls.options: default
       traefik.http.services.grafana.loadbalancer.server.scheme: http
@@ -285,13 +231,9 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: frontend
-      # HTTP->HTTPS redirect
-      traefik.http.routers.nodered-insecure.rule: PathPrefix(`/nodered`)
-      traefik.http.routers.nodered-insecure.entrypoints: http
-      traefik.http.routers.nodered-insecure.middlewares: httpsRedirect@file
       # Web UI
       traefik.http.routers.nodered.rule: PathPrefix(`/nodered`)
-      traefik.http.routers.nodered.entrypoints: https
+      traefik.http.routers.nodered.entrypoints: http,https
       traefik.http.routers.nodered.tls.certresolver: default
       traefik.http.routers.nodered.tls.options: default
       traefik.http.services.nodered.loadbalancer.server.scheme: http

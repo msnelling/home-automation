@@ -1,28 +1,8 @@
-http:
-  middlewares:
-    httpsRedirect:
-      redirectScheme:
-        scheme: https
-    trailingSlashFix1:
-      redirectRegex:
-        regex: ^(https?://[^/]+/[a-z0-9_]+)$$
-        replacement: $${1}/
-    trailingSlashFix2:
-      stripPrefixRegex:
-        regex: 
-          - /[a-z0-9_]+
-    trailingSlashFix:
-      chain:
-        middlewares:
-          - trailingSlashFix1
-          - trailingSlashFix2
 tls:
   options:
     default:
-      #sniStrict: true
       minVersion: VersionTLS12
       cipherSuites:
-        #- TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
         - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
     mintls13:

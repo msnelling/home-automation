@@ -1,0 +1,3 @@
+[submodule "home-assistant/themes/lovelace-ios-dark-mode-theme"]
+	path = home-assistant/themes/lovelace-ios-dark-mode-theme
+	url = https://github.com/basnijholt/lovelace-ios-dark-mode-theme.git
