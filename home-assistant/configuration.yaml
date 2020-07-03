@@ -16,7 +16,6 @@ homeassistant:
     - type: homeassistant
 
 http:
-  base_url: !secret base_url
   server_port: 8123
   login_attempts_threshold: 20
   use_x_forwarded_for: true
@@ -31,6 +30,7 @@ tts:
 
 # Enables the frontend
 frontend:
+  themes: !include_dir_merge_named themes
 
 # UI panels
 panel_iframe:
@@ -38,15 +38,17 @@ panel_iframe:
     title: Grafana
     icon: mdi:chart-areaspline
     url: https://home.xmple.io/grafana/d/pRwgexmgz/environment?orgId=1&refresh=1s&theme=light&kiosk=1&from=now-2d&to=now
-  nodered:
-    title: Node-RED
-    icon: mdi:shuffle-variant
-    url: https://home.xmple.io/nodered/
 
 # Enables configuration UI
 config:
 
 discovery:
+
+zeroconf:
+  default_interface: true
+
+homekit:
+  advertise_ip: "10.1.1.20"
 
 spotify:
   client_id: !secret spotify_client_id
@@ -92,19 +94,6 @@ person:
     user_id: !secret ha_user_id_mark
     device_trackers:
       - device_tracker.app_marks_iphone
-  - name: Eleonora
-    id: eleonora
-#    device_trackers:
-#      - device_tracker.unifi_iphone_eleonora
-  - name: Kati
-    id: kati
-#    device_trackers:
-#      - device_tracker.unifi_galaxy6s_kati
-
-# Access devices through HomeKit
-homekit:
-  advertise_ip: !secret homekit_broadcast_ip
-  port: 51828
 
 dyson:
   username: !secret dyson_username
@@ -116,15 +105,14 @@ dyson:
 
 samsungtv:
   - name: Samsung UE65KS9500 TV
-    host: !secret samsung_tv_ip
+    host: !secret livingroom_tv_ip
     turn_on_action:
       - service: wake_on_lan.send_magic_packet
         data:
           mac: "40:16:3b:0e:3f:f5"
-
+      
 # History
 recorder:
-  purge_interval: 1
   purge_keep_days: 2
   #db_url: !secret recorder_db_url
 history:
@@ -178,6 +166,7 @@ weather:
     api_key: !secret darksky_api_key
     latitude: !secret home_latitude
     longitude: !secret home_longitude
+    mode: daily
 
 zone:
   - name: Home
@@ -197,7 +186,11 @@ sensor mqtt: !include mqtt/sensors.yaml
 binary_sensor: !include binary_sensors.yaml
 binary_sensor mqtt: !include mqtt/binary_sensors.yaml
 
+input_boolean: !include input_booleans.yaml
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+switch: !include switches.yaml
+light: !include lights.yaml

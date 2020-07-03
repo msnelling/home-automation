@@ -1,0 +1,4 @@
+bedtime_triggered:
+  name: Bedtime Triggered
+  initial: off
+  icon: mdi:bed

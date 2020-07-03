@@ -1,7 +1,12 @@
 family:
   name: Family
   icon: mdi:account-group
-  #control: hidden
   entities:
     - person.mark
-    - person.eleonora
+
+bedroom_lights:
+  name: Bedroom Lights
+  icon: mdi:bulb-group
+  entities:
+    - light.bedroom_bedside_left
+    - light.bedroom_bedside_right

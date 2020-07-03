@@ -1,3 +1,25 @@
 - platform: workday
   country: England
   name: Workday
+
+- platform: bayesian
+  name: In Bed
+  probability_threshold: 0.95
+  prior: 0.42
+  observations:
+    - entity_id: sun.sun
+      platform: state
+      to_state: below_horizon
+      prob_given_true: 0.75
+    - entity_id: input_boolean.bedtime_triggered
+      platform: state
+      to_state: "on"
+      prob_given_true: 0.75
+    - entity_id: group.bedroom_lights
+      platform: state
+      to_state: "off"
+      prob_given_true: 0.65
+    - entity_id: remote.living_room_tv
+      platform: state
+      to_state: "off"
+      prob_given_true: 0.65
