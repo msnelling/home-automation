@@ -1,3 +1,31 @@
 - platform: london_underground
   line:
     - Northern
+- platform: cert_expiry
+  host: plex.xmple.io
+- platform: cert_expiry
+  host: nas01.xmple.io
+- platform: cert_expiry
+  host: pfsense.xmple.io
+- platform: cert_expiry
+  host: unifi.xmple.io
+- platform: cert_expiry
+  host: home.xmple.io
+- platform: cert_expiry
+  host: sonarr.xmple.io
+- platform: cert_expiry
+  host: radarr.xmple.io
+- platform: cert_expiry
+  host: jackett.xmple.io
+- platform: cert_expiry
+  host: bazarr.xmple.io
+- platform: cert_expiry
+  host: ombi.xmple.io
+- platform: cert_expiry
+  host: qbittorrent.xmple.io
+- platform: cert_expiry
+  host: nzbget.xmple.io
+- platform: cert_expiry
+  host: dns1.xmple.io
+- platform: cert_expiry
+  host: dns2.xmple.io

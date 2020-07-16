@@ -1,0 +1,5 @@
+input_boolean.motion_detected:
+  icon: mdi:motion-sensor
+
+input_boolean.bedtime_triggered:
+  icon: mdi:sleep

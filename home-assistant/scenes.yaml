@@ -26,7 +26,7 @@
       state: 'on'
       supported_features: 63
 - id: '1593544879685'
-  name: Evening
+  name: Bedroom Lights On (Full)
   entities:
     light.bedroom_bedside_left:
       brightness: 255
@@ -52,3 +52,14 @@
       min_mireds: 153
       state: 'on'
       supported_features: 63
+- id: '1594126844463'
+  name: Sleep
+  entities:
+    group.bedroom_lights:
+      entity_id:
+      - light.bedroom_bedside_left
+      - light.bedroom_bedside_right
+      friendly_name: Bedroom Lights
+      icon: mdi:lightbulb
+      order: 1
+      state: 'off'

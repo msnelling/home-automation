@@ -1,0 +1,5 @@
+goodnight:
+  alias: Goodnight
+  icon: mdi:sleep
+  sequence:
+  - scene: scene.sleep

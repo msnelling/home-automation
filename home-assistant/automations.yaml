@@ -112,19 +112,35 @@
     entity_id: input_boolean.bedtime_triggered
     service: input_boolean.turn_on
 - id: '1593549830579'
-  alias: Away Mode
+  alias: Away
   description: ''
   trigger:
-  - entity_id: person.mark
+  - entity_id: group.family
+    for: 00:15:00
     platform: state
     to: not_home
-  condition: []
+  - entity_id: input_boolean.motion_detected
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.motion_detected
+    state: 'off'
   action:
   - data: {}
     entity_id: all
     service: light.turn_off
+  - data: {}
+    entity_id: media_player.ue65ks9500
+    service: media_player.turn_off
+  - data: {}
+    entity_id: all
+    service: media_player.media_stop
 - id: '1593716041042'
-  alias: Morning Reset
+  alias: Daily Reset
   description: ''
   trigger:
   - at: 05:00
@@ -134,3 +150,109 @@
   - data: {}
     entity_id: input_boolean.bedtime_triggered
     service: input_boolean.turn_off
+- id: '1594320573657'
+  alias: Motion Detected
+  description: ''
+  trigger:
+  - entity_id: group.motion_sensors
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.motion_detected
+    state: 'off'
+  action:
+  - data: {}
+    entity_id: input_boolean.motion_detected
+    service: input_boolean.turn_on
+- id: '1594320865639'
+  alias: No Motion Detected
+  description: ''
+  trigger:
+  - entity_id: group.motion_sensors
+    for: 00:15:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: input_boolean.motion_detected
+    service: input_boolean.turn_off
+- id: '1594580404345'
+  alias: Doors and Windows Alarm
+  description: ''
+  trigger:
+  - entity_id: group.doors_and_windows
+    from: 'off'
+    platform: state
+    to: 'on'
+  - hours: '*'
+    minutes: /15
+    platform: time_pattern
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.suppress_alert
+    state: 'off'
+  - condition: state
+    entity_id: group.doors_and_windows
+    state: 'on'
+  action:
+  - data:
+      message: A window/door is open
+    service: notify.mobile_app_marks_iphone
+- id: '1594891795002'
+  alias: Toggle Bedroom Lights
+  description: ''
+  trigger:
+  - device_id: f103f6b8690746369076fbd646262ab0
+    discovery_id: 0x00178801060757a1 action_on
+    domain: mqtt
+    platform: device
+    subtype: 'on'
+    type: action
+  - device_id: f103f6b8690746369076fbd646262ab0
+    discovery_id: 0x00178801060757a1 action_off
+    domain: mqtt
+    platform: device
+    subtype: 'off'
+    type: action
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.bedroom_lights
+    service: light.toggle
+- id: '1594892093540'
+  alias: Bedroom Lights On (Full)
+  description: ''
+  trigger:
+  - device_id: f103f6b8690746369076fbd646262ab0
+    discovery_id: 0x00178801060757a1 action_skip_backward
+    domain: mqtt
+    platform: device
+    subtype: skip_backward
+    type: action
+  condition: []
+  action:
+  - scene: scene.bedroom_evening
+- id: '1594893212887'
+  alias: Bedroom Lights Dim
+  description: ''
+  trigger:
+  - device_id: f103f6b8690746369076fbd646262ab0
+    discovery_id: 0x00178801060757a1 action_skip_forward
+    domain: mqtt
+    platform: device
+    subtype: skip_forward
+    type: action
+  condition: []
+  action:
+  - data:
+      brightness: 0
+      transition: 50
+    entity_id: light.bedroom_lights
+    service: light.turn_on

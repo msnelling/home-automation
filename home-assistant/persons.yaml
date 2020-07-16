@@ -1,0 +1,5 @@
+- name: Mark
+  id: mark
+  user_id: !secret ha_user_id_mark
+  device_trackers:
+    - device_tracker.marks_iphone

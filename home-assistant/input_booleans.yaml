@@ -2,3 +2,13 @@ bedtime_triggered:
   name: Bedtime Triggered
   initial: off
   icon: mdi:bed
+
+motion_detected:
+  name: Motion Detected
+  initial: off
+  icon: mdi:motion-sensor
+
+suppress_alert:
+  name: Suppress Alerts
+  initial: off
+  icon: mdi:bell-off

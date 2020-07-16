@@ -8,8 +8,13 @@ homeassistant:
   longitude: !secret home_longitude
   elevation: !secret home_elevation
 
-  customize: !include customize.yaml
+  # Customization
+  customize: !include customization/customize.yaml
+  customize_domain: !include customization/domain.yaml
+  customize_glob: !include customization/glob.yaml
+
   packages: !include_dir_named packages
+
   whitelist_external_dirs:
     - /tmp
   auth_providers:
@@ -42,6 +47,8 @@ panel_iframe:
 # Enables configuration UI
 config:
 
+wake_on_lan:
+
 discovery:
 
 zeroconf:
@@ -49,6 +56,13 @@ zeroconf:
 
 homekit:
   advertise_ip: "10.1.1.20"
+  port: 51827
+  filter:
+    exclude_domains:
+      - automation
+      - input_boolean
+      - media_player
+      - script
 
 spotify:
   client_id: !secret spotify_client_id
@@ -59,7 +73,7 @@ mobile_app:
 
 # MQTT
 mqtt:
-  #discovery: true
+  discovery: true
   client_id: home-assistant-1
   broker: mqtt
   port: 1883
@@ -87,13 +101,6 @@ sonos:
       - 10.1.1.184 # Snug
       - 10.1.1.114 # Bedroon
       - 10.1.1.133 # Luna's Room
-
-person:
-  - name: Mark
-    id: mark
-    user_id: !secret ha_user_id_mark
-    device_trackers:
-      - device_tracker.app_marks_iphone
 
 dyson:
   username: !secret dyson_username
@@ -161,13 +168,6 @@ system_health:
 
 sun:
 
-weather:
-  - platform: darksky
-    api_key: !secret darksky_api_key
-    latitude: !secret home_latitude
-    longitude: !secret home_longitude
-    mode: daily
-
 zone:
   - name: Home
     latitude: !secret home_latitude
@@ -181,16 +181,13 @@ zone:
     icon: mdi:office-building
 
 sensor: !include sensors.yaml
-sensor mqtt: !include mqtt/sensors.yaml
-
 binary_sensor: !include binary_sensors.yaml
-binary_sensor mqtt: !include mqtt/binary_sensors.yaml
-
 input_boolean: !include input_booleans.yaml
-
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 switch: !include switches.yaml
 light: !include lights.yaml
+weather: !include weather.yaml
+person: !include persons.yaml

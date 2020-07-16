@@ -19,7 +19,7 @@
       platform: state
       to_state: "off"
       prob_given_true: 0.65
-    - entity_id: remote.living_room_tv
+    - entity_id: media_player.ue65ks9500
       platform: state
       to_state: "off"
       prob_given_true: 0.65
