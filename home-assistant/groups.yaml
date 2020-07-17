@@ -4,13 +4,6 @@ family:
   entities:
     - person.mark
 
-bedroom_lights:
-  name: Bedroom Lights
-  icon: mdi:lightbulb
-  entities:
-    - light.bedroom_bedside_left
-    - light.bedroom_bedside_right
-
 motion_sensors:
   name: Motion Sensors
   icon: mdi:motion-sensor

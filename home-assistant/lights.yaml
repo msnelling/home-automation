@@ -1,5 +1,5 @@
 - platform: group
   name: Bedroom Lights
   entities:
-    - light.bedroom_bedside_left
-    - light.bedroom_bedside_right
+    - light.bedroom_bedside_left_light
+    - light.bedroom_bedside_right_light

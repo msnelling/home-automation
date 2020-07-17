@@ -1,57 +1,51 @@
 - id: '1592942620984'
   name: Bedtime
   entities:
-    light.bedroom_bedside_left:
-      brightness: 20
-      color_temp: 373
-      effect: none
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Bedside Left
+    light.bedroom_lights:
+      brightness: 27
+      color_temp: 349
+      entity_id:
+      - light.bedroom_bedside_left_light
+      - light.bedroom_bedside_right_light
+      friendly_name: Bedroom Lights
+      hs_color:
+      - 39.213
+      - 49.804
       max_mireds: 500
       min_mireds: 153
+      rgb_color:
+      - 255
+      - 211
+      - 127
       state: 'on'
-      supported_features: 63
-    light.bedroom_bedside_right:
-      brightness: 20
-      color_temp: 383
-      effect: none
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Bedside Right
-      max_mireds: 500
-      min_mireds: 153
-      state: 'on'
-      supported_features: 63
+      supported_features: 59
+      xy_color:
+      - 0.448
+      - 0.409
 - id: '1593544879685'
   name: Bedroom Lights On (Full)
   entities:
-    light.bedroom_bedside_left:
-      brightness: 255
-      color_temp: 373
-      effect: none
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Bedside Left
+    light.bedroom_lights:
+      brightness: 250
+      color_temp: 368
+      entity_id:
+      - light.bedroom_bedside_left_light
+      - light.bedroom_bedside_right_light
+      friendly_name: Bedroom Lights
+      hs_color:
+      - 38.382
+      - 53.333
       max_mireds: 500
       min_mireds: 153
+      rgb_color:
+      - 255
+      - 205
+      - 119
       state: 'on'
-      supported_features: 63
-    light.bedroom_bedside_right:
-      brightness: 255
-      color_temp: 383
-      effect: none
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Bedside Right
-      max_mireds: 500
-      min_mireds: 153
-      state: 'on'
-      supported_features: 63
+      supported_features: 59
+      xy_color:
+      - 0.46
+      - 0.408
 - id: '1594126844463'
   name: Sleep
   entities:
