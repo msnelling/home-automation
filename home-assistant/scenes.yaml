@@ -57,3 +57,17 @@
       icon: mdi:lightbulb
       order: 1
       state: 'off'
+- id: '1595241916121'
+  name: Work from Home
+  entities:
+    light.dimmer_snug_main_light:
+      brightness: 240
+      state: 'on'
+    media_player.sonos_snug:
+      icon: mdi:spotify
+      is_volume_muted: false
+      media_content_id: x-rincon-mp3radio://http://bbcmedia.ic.llnwd.net/stream/bbcmedia_6music_mf_p?s=1595234410&e=1595248810&h=cc098c6dd4844c2ceece9dbba9bf8a87
+      media_content_type: music
+      media_title: BBC 6 Music
+      state: playing
+      volume_level: 0.3

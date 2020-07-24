@@ -53,7 +53,10 @@ services:
     image: homeassistant/raspberrypi4-homeassistant:stable
     hostname: hass
     ports:
-      - 51827:51827/tcp
+      - 987:987/udp      # PlayStation 4
+      - 997:997/tcp      # PlayStation 4
+      - 1400:1400/tcp    # Sonos
+      - 51827:51827/tcp  # HomeKit
     networks:
       frontend:
       backend:
@@ -70,6 +73,7 @@ services:
       timeout: 15s
       interval: 30s
       retries: 3
+    privileged: true
     restart: unless-stopped
     labels:
       traefik.enable: "true"
@@ -133,7 +137,7 @@ services:
 
   z2m:
     container_name: z2m
-    image: koenkk/zigbee2mqtt:latest-dev
+    image: koenkk/zigbee2mqtt:latest
     networks:
       backend:
     devices:
@@ -141,6 +145,8 @@ services:
     volumes:
       - ./zigbee2mqtt:/app/data
       - /run/udev:/run/udev:ro
+      #- ../zigbee-herdsman-converters:/app/node_modules/zigbee-herdsman-converters:ro
+      #- ../zigbee2mqtt/lib/extension/homeassistant.js:/app/lib/extension/homeassistant.js
     environment:
       - TZ=Europe/London
     privileged: true

@@ -15,7 +15,7 @@ homeassistant:
 
   packages: !include_dir_named packages
 
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - /tmp
   auth_providers:
     - type: homeassistant
@@ -63,6 +63,25 @@ homekit:
       - input_boolean
       - media_player
       - script
+  entity_config:
+    binary_sensor.motion_livingroom_occupancy:
+      linked_battery_sensor: sensor.motion_livingroom_battery
+      low_battery_threshold: 30
+    binary_sensor.motion_bathroom_occupancy:
+      linked_battery_sensor: sensor.motion_bathroom_battery
+      low_battery_threshold: 30
+    binary_sensor.motion_snug_occupancy:
+      linked_battery_sensor: sensor.motion_snug_battery
+      low_battery_threshold: 30
+    binary_sensor.motion_kitchen_occupancy:
+      linked_battery_sensor: sensor.motion_kitchen_battery
+      low_battery_threshold: 30
+    binary_sensor.motion_bedroom_occupancy:
+      linked_battery_sensor: sensor.motion_bedroom_battery
+      low_battery_threshold: 30
+    binary_sensor.motion_lunas_room_occupancy:
+      linked_battery_sensor: sensor.motion_lunas_room_battery
+      low_battery_threshold: 30
 
 spotify:
   client_id: !secret spotify_client_id
@@ -86,14 +105,9 @@ mqtt:
     topic: 'hass/status'
     payload: 'offline'
 
-# Philips Hue
-hue:
-  bridges:
-    - host: !secret hue_bridge_ip
-      allow_hue_groups: false
-
 sonos:
   media_player:
+    advertise_addr: "10.1.1.20"
     hosts:
       - 10.1.1.121 # Bathroom
       - 10.1.1.197 # Livingroom

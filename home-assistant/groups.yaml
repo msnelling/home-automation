@@ -8,16 +8,19 @@ motion_sensors:
   name: Motion Sensors
   icon: mdi:motion-sensor
   entities:
+    - binary_sensor.motion_bathroom_occupancy
     - binary_sensor.motion_livingroom_occupancy
     - binary_sensor.motion_snug_occupancy
-    - binary_sensor.motion_bathroom_occupancy
+    - binary_sensor.motion_kitchen_occupancy
+    - binary_sensor.motion_bedroom_occupancy
+    - binary_sensor.motion_lunas_room_occupancy
 
 doors_and_windows:
   name: Doors and Windows
   icon: mdi:door-closed-lock
   entities:
     - binary_sensor.balcony_door_contact
-    - binary_sensor.front_door_contact
     - binary_sensor.bathroom_window_contact
+    - binary_sensor.front_door_contact
     - binary_sensor.kitchen_window_contact
   

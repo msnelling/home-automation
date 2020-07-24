@@ -29,3 +29,5 @@
   host: dns1.xmple.io
 - platform: cert_expiry
   host: dns2.xmple.io
+- platform: cert_expiry
+  host: esx01-ipmi.xmple.io
