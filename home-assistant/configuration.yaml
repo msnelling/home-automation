@@ -61,8 +61,8 @@ homekit:
     exclude_domains:
       - automation
       - input_boolean
-      - media_player
       - script
+      - person
   entity_config:
     binary_sensor.motion_livingroom_occupancy:
       linked_battery_sensor: sensor.motion_livingroom_battery

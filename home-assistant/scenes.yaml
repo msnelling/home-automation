@@ -26,25 +26,25 @@
   name: Bedroom Lights On (Full)
   entities:
     light.bedroom_lights:
-      brightness: 250
-      color_temp: 368
+      brightness: 251
+      color_temp: 261
       entity_id:
       - light.bedroom_bedside_left_light
       - light.bedroom_bedside_right_light
       friendly_name: Bedroom Lights
       hs_color:
-      - 38.382
-      - 53.333
+      - 37.778
+      - 52.941
       max_mireds: 500
       min_mireds: 153
       rgb_color:
       - 255
       - 205
-      - 119
+      - 120
       state: 'on'
       supported_features: 59
       xy_color:
-      - 0.46
+      - 0.459
       - 0.408
 - id: '1594126844463'
   name: Sleep

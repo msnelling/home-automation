@@ -24,6 +24,8 @@
 - platform: cert_expiry
   host: qbittorrent.xmple.io
 - platform: cert_expiry
+  host: transmission.xmple.io
+- platform: cert_expiry
   host: nzbget.xmple.io
 - platform: cert_expiry
   host: dns1.xmple.io
