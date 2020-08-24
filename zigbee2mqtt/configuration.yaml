@@ -85,7 +85,7 @@ devices:
   '0x000d6ffffe6c28f1':
     friendly_name: dimmer_snug_centre
     homeassistant:
-      brightness_scale: 244
+      brightness_scale: 240
   '0x001788010635e556':
     friendly_name: switch
   '0x0017880100f7e332':
@@ -94,3 +94,5 @@ devices:
     friendly_name: bedroom_bedside_left
   '0x000d6ffffe9d3379':
     friendly_name: dimmer_livingroom_centre
+  '0x680ae2fffea1352c':
+    friendly_name: 'light_snug_dresser'

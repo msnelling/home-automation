@@ -112,7 +112,7 @@ sonos:
       - 10.1.1.121 # Bathroom
       - 10.1.1.197 # Livingroom
       - 10.1.1.118 # Kitchen
-      - 10.1.1.184 # Snug
+      - 10.1.1.101 # Snug
       - 10.1.1.114 # Bedroon
       - 10.1.1.133 # Luna's Room
 
