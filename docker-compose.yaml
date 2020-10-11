@@ -198,6 +198,23 @@ services:
       traefik.http.services.chronograf.loadbalancer.server.scheme: http
       traefik.http.services.chronograf.loadbalancer.server.port: 8888
 
+  telegraf:
+    container_name: telegraf
+    image: telegraf:latest
+    environment:
+      HOST_PROC: /rootfs/proc
+      HOST_SYS: /rootfs/sys
+      HOST_ETC: /rootfs/etc
+    networks:
+      backend:
+    volumes:
+     - ./telegraf:/etc/telegraf:ro
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+     - /sys:/rootfs/sys:ro
+     - /proc:/rootfs/proc:ro
+     - /etc:/rootfs/etc:ro
+    restart: unless-stopped
+
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
