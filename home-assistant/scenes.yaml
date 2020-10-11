@@ -1,5 +1,6 @@
 - id: '1592942620984'
   name: Bedtime
+  icon: mdi:power-sleep
   entities:
     light.bedroom_lights:
       brightness: 27
@@ -7,67 +8,31 @@
       entity_id:
       - light.bedroom_bedside_left_light
       - light.bedroom_bedside_right_light
-      friendly_name: Bedroom Lights
-      hs_color:
-      - 39.213
-      - 49.804
-      max_mireds: 500
-      min_mireds: 153
-      rgb_color:
-      - 255
-      - 211
-      - 127
       state: 'on'
-      supported_features: 59
-      xy_color:
-      - 0.448
-      - 0.409
 - id: '1593544879685'
   name: Bedroom Lights On (Full)
+  icon: mdi:lightbulb-outline
   entities:
     light.bedroom_lights:
-      brightness: 251
+      brightness: 255
       color_temp: 261
       entity_id:
       - light.bedroom_bedside_left_light
       - light.bedroom_bedside_right_light
-      friendly_name: Bedroom Lights
-      hs_color:
-      - 37.778
-      - 52.941
-      max_mireds: 500
-      min_mireds: 153
-      rgb_color:
-      - 255
-      - 205
-      - 120
       state: 'on'
-      supported_features: 59
-      xy_color:
-      - 0.459
-      - 0.408
 - id: '1594126844463'
-  name: Sleep
+  name: Goodnight
+  icon: mdi:sleep
   entities:
-    group.bedroom_lights:
-      entity_id:
-      - light.bedroom_bedside_left
-      - light.bedroom_bedside_right
-      friendly_name: Bedroom Lights
-      icon: mdi:lightbulb
-      order: 1
+    light.bedroom_lights:
       state: 'off'
-- id: '1595241916121'
-  name: Work from Home
+- id: '1597828957278'
+  name: Working
   entities:
-    light.dimmer_snug_main_light:
+    light.dimmer_snug_centre_light:
       brightness: 240
+      friendly_name: dimmer_snug_centre_light
+      linkquality: 202
       state: 'on'
-    media_player.sonos_snug:
-      icon: mdi:spotify
-      is_volume_muted: false
-      media_content_id: x-rincon-mp3radio://http://bbcmedia.ic.llnwd.net/stream/bbcmedia_6music_mf_p?s=1595234410&e=1595248810&h=cc098c6dd4844c2ceece9dbba9bf8a87
-      media_content_type: music
-      media_title: BBC 6 Music
-      state: playing
-      volume_level: 0.3
+      supported_features: 41
+  icon: mdi:coffee

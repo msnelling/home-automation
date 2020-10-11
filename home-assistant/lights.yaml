@@ -3,3 +3,9 @@
   entities:
     - light.bedroom_bedside_left_light
     - light.bedroom_bedside_right_light
+
+- platform: group
+  name: Snug Lights
+  entities:
+    - light.dimmer_snug_centre_light
+    - light.light_snug_dresser_light

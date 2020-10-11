@@ -256,3 +256,26 @@
       transition: 50
     entity_id: light.bedroom_lights
     service: light.turn_on
+- id: '1600770012475'
+  alias: Mac call in progress
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: 62ef13c5fcaf11eab4611b1f501617c4
+    entity_id: binary_sensor.mbp_macbook_pro_microphone
+    domain: binary_sensor
+  condition:
+  - condition: state
+    entity_id: sensor.mbp_internal_battery_state
+    state: AC Power
+    attribute: Power Source State
+  - condition: state
+    entity_id: media_player.sonos_snug
+    state: playing
+  action:
+  - service: media_player.volume_mute
+    data:
+      is_volume_muted: true
+    entity_id: media_player.sonos_snug
+  mode: single

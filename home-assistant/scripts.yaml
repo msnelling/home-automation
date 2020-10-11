@@ -1,23 +1,15 @@
-goodnight:
-  alias: Goodnight
-  icon: mdi:sleep
-  sequence:
-  - scene: scene.sleep
-
 work_mode:
-  alias: Work Mode
+  alias: Work from Home
   sequence:
-  - service: light.turn_on
-    data:
-      entity_id: light.dimmer_snug_main_light
-      brightness: 255
-  - service: media_player.volume_set
-    data:
-      entity_id: media_player.sonos_snug
+  - scene: scene.working
+  - data:
       volume_level: 0.3
-  - service: media_player.play_media
-    data:
-      entity_id: media_player.sonos_snug
+    entity_id: media_player.sonos_snug
+    service: media_player.volume_set
+  - data:
       media_content_id: http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/llnw/bbc_6music.m3u8
       media_content_type: music
-    
+    entity_id: media_player.sonos_snug
+    service: media_player.play_media
+  mode: single
+  icon: mdi:coffee-outline
